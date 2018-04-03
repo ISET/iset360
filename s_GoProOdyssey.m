@@ -96,18 +96,15 @@ recipe = piRead(pbrtFile,'version',3);
 
 %% Change the camera lens
 
-recipe.camera = struct('type','Camera','subtype','realistic');
+recipe.set('camera','realistic');
 
 % Focus at roughly meter away.
-recipe.camera.focusdistance.value = 1.5; % meter
-recipe.camera.focusdistance.type = 'float';
+recipe.set('focusdistance',1.5);
 
 % Render subset of image
 %recipe.film.cropwindow.value = [0.5 1 0.5 1];
 %recipe.film.cropwindow.type = 'float';
 
-% Change the sampler
-recipe.sampler.subtype = 'halton';
 
 %% Loop through each camera in the rig and render.
 
@@ -123,26 +120,23 @@ for ii = 1:size(camOrigins,1)
     %% Specify camera properties
     
     % Circumference cameras
-    lensFile = fullfile(rigRootPath,'data','lens','wide.56deg.3.0mm_v3.dat');
+    lensFile = fullfile(piRootPath,'data','lens','wide.56deg.3.0mm.dat');
     
     % Set sensor size
-    recipe.film.diagonal.value = 8; % Google Jump (~1/2.3") Bumped up a bit to try to get more FOV
-    recipe.film.diagonal.type = 'float';
+    recipe.set('filmdiagonal',8); % Google Jump (~1/2.3") Bumped up a bit to try to get more FOV
     
     % Attach the lens
-    recipe.camera.lensfile.value = lensFile; % mm
-    recipe.camera.lensfile.type = 'string';
-    
+    recipe.set('lensfile',lensFile);
+
     % Set the aperture to be the largest possible.
     % PBRT-v3-spectral will automatically scale it down to the largest
     % possible aperture for the chosen lens.
-    recipe.camera.aperturediameter.value = 10; % mm
-    recipe.camera.aperturediameter.type = 'float';
+    recipe.set('aperturediameter',10); % mm
     
     %% Set render quality
     recipe.set('filmresolution',filmResolution);
     recipe.set('pixelsamples',pixelSamples);
-    recipe.integrator.maxdepth.value = bounces;
+    recipe.set('maxdepth',bounces);
     
     %% Set camera lookAt
     

@@ -97,38 +97,30 @@ originAll = originAll + repmat(rigOrigin,[6 1]);
 % Recalculate up as a vector instead of a point
 upAll = upTargetAll-originAll;
 
-
 %% Change the camera parameters
 
-recipe.camera = struct('type','Camera','subtype','realistic');
+recipe.set('camera','realistic');
 
 % Focus at roughly meter away.
-recipe.camera.focusdistance.value = 1.5; % meter
-recipe.camera.focusdistance.type = 'float';
-
-% Change the sampler
-recipe.sampler.subtype = 'halton';
+recipe.set('focusdistance',1.5);
 
 % Both lenses are fisheye lens
-lensFile = fullfile(rigRootPath,'data','lens','wide.56deg.3.0mm_v3.dat');
+lensFile = fullfile(piRootPath,'data','lens','wide.56deg.3.0mm.dat');
 
-recipe.film.diagonal.value = 9; % Try something larger to get a bigger FOV
-recipe.film.diagonal.type = 'float';
+recipe.set('filmdiagonal',9); % Try something larger to get a bigger FOV
 
 % Attach the lens
-recipe.camera.lensfile.value = lensFile; % mm
-recipe.camera.lensfile.type = 'string';
+recipe.set('lensfile',lensFile);
 
 % Set the aperture to be the largest possible.
 % PBRT-v3-spectral will automatically scale it down to the largest
 % possible aperture for the chosen lens.
-recipe.camera.aperturediameter.value = 10; % mm
-recipe.camera.aperturediameter.type = 'float';
+recipe.set('aperturediameter',10); % mm
 
 %% Set render quality
 recipe.set('filmresolution',filmResolution);
 recipe.set('pixelsamples',pixelSamples);
-recipe.integrator.maxdepth.value = bounces;
+recipe.set('maxdepth',bounces);
 
 %% Loop through each camera in the rig and render.
 
