@@ -22,7 +22,7 @@ pixelSamples = 128;
 bounces = 4;
 
 % Save parameters
-workingDir = fullfile(rigRootPath,'local');
+workingDir = fullfile(piRootPath,'local');
 if(~exist(workingDir,'dir'))
     mkdir(workingDir);
 end
