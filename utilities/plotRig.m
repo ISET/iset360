@@ -40,9 +40,9 @@ h2 = quiver3(from(i,1),from(i,3),from(i,2), ...
     'MaxHeadSize',3,'AutoScale','off');
 
 % Plot up vector
-h3 = quiver3(from(i,1),from(i,3),from(i,2), ...
-    up(i,1),up(i,3),up(i,2),'g', ...
-    'MaxHeadSize',3,'AutoScale','off');
+% h3 = quiver3(from(i,1),from(i,3),from(i,2), ...
+%     up(i,1),up(i,3),up(i,2),'g', ...
+%     'MaxHeadSize',3,'AutoScale','off');
 
 % Plot origins
 h1 = scatter3(from(i,1),from(i,3),from(i,2),80,...
@@ -65,14 +65,22 @@ h1 = scatter3(from(i,1),from(i,3),from(i,2),80,...
 % scatter(BL(1),BL(2),BL(3));
 
 % Plot indices
-    x = from(i,1)+0.015;
+    x = from(i,1)+0.03;
     y = from(i,2)+0.0;
-    z = from(i,3)+0.015;
+    z = from(i,3)+0.03;
     text(x,z,y,num2str(index(i)));    
 end
 
-legend([h1 h2 h3],'Origin', ...
-    'Forward Vector','Up Vector','location','best')
+% legend([h1 h2 h3],'Origin', ...
+%     'Forward Vector','Up Vector','location','best')
+legend([h1 h2],'Origin', ...
+    'Forward Vector','location','best')
+
+% Adjust z-lim
+maxZ = max(from(:,2));
+minZ = min(from(:,2));
+zlim([minZ-0.1 maxZ+0.1]);
+% axis([-0.15 0.15 -0.15 0.15 -0.05 0.05])
 
 % Adjust text size
 view(170,25);
